@@ -5,6 +5,7 @@
 
 import argparse, random, socket, zen_utils
 
+
 def client(address, cause_error=False):
     sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
     sock.connect(address)
@@ -16,6 +17,7 @@ def client(address, cause_error=False):
         sock.sendall(aphorism)
         print(aphorism, zen_utils.recv_until(sock, b'.'))
     sock.close()
+
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(description='Example client')

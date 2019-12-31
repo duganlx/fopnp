@@ -7,6 +7,7 @@ import argparse, socket, ssl, sys, textwrap
 import ctypes
 from pprint import pprint
 
+
 def open_tls(context, address, server=False):
     raw_sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
     if server:
@@ -21,6 +22,7 @@ def open_tls(context, address, server=False):
         say('Address we want to talk to', address)
         raw_sock.connect(address)
         return context.wrap_socket(raw_sock)
+
 
 def describe(ssl_sock, hostname, server=False, debug=False):
     cert = ssl_sock.getpeercert()
@@ -65,11 +67,13 @@ def describe(ssl_sock, hostname, server=False, debug=False):
 
     return cert
 
+
 class PySSLSocket(ctypes.Structure):
     """The first few fields of a PySSLSocket (see Python's Modules/_ssl.c)."""
 
     _fields_ = [('ob_refcnt', ctypes.c_ulong), ('ob_type', ctypes.c_void_p),
                 ('Socket', ctypes.c_void_p), ('ssl', ctypes.c_void_p)]
+
 
 def SSL_get_version(ssl_sock):
     """Reach behind the scenes for a socket's TLS protocol version."""
@@ -84,6 +88,7 @@ def SSL_get_version(ssl_sock):
     version_bytestring = lib.SSL_get_version(struct.ssl)
     return version_bytestring.decode('ascii')
 
+
 def lookup(prefix, name):
     if not name.startswith(prefix):
         name = prefix + name
@@ -96,12 +101,15 @@ def lookup(prefix, name):
         print(fill(message), file=sys.stderr)
         sys.exit(2)
 
+
 def say(title, *words):
     print(fill(title.ljust(36, '.') + ' ' + ' '.join(str(w) for w in words)))
+
 
 def fill(text):
     return textwrap.fill(text, subsequent_indent='    ',
                          break_long_words=False, break_on_hyphens=False)
+
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(description='Protect a socket with TLS')

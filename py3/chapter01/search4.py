@@ -17,6 +17,7 @@ Connection: close\r\n\
 \r\n\
 """
 
+
 def geocode(address):
     unencrypted_sock = socket.socket()
     unencrypted_sock.connect(('nominatim.openstreetmap.org', 443))
@@ -30,6 +31,7 @@ def geocode(address):
             break
         raw_reply += more
     print(raw_reply.decode('utf-8'))
+
 
 if __name__ == '__main__':
     geocode('207 N. Defiance St, Archbold, OH')

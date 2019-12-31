@@ -8,6 +8,7 @@ from datetime import datetime
 
 MAX_BYTES = 65535
 
+
 def server(port):
     sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
     sock.bind(('127.0.0.1', port))
@@ -20,6 +21,7 @@ def server(port):
         data = text.encode('ascii')
         sock.sendto(data, address)
 
+
 def client(port):
     sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
     text = 'The time is {}'.format(datetime.now())
@@ -29,6 +31,7 @@ def client(port):
     data, address = sock.recvfrom(MAX_BYTES)  # Danger! See Chapter 2
     text = data.decode('ascii')
     print('The server {} replied {!r}'.format(address, text))
+
 
 if __name__ == '__main__':
     choices = {'client': client, 'server': server}

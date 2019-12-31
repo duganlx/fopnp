@@ -5,6 +5,7 @@
 
 import argparse, socket, ssl
 
+
 def client(host, port, cafile=None):
     purpose = ssl.Purpose.SERVER_AUTH
     context = ssl.create_default_context(purpose, cafile=cafile)
@@ -19,6 +20,7 @@ def client(host, port, cafile=None):
         if not data:
             break
         print(repr(data))
+
 
 def server(host, port, certfile, cafile=None):
     purpose = ssl.Purpose.CLIENT_AUTH
@@ -36,6 +38,7 @@ def server(host, port, certfile, cafile=None):
 
     ssl_sock.sendall('Simple is better than complex.'.encode('ascii'))
     ssl_sock.close()
+
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(description='Safe TLS client and server')

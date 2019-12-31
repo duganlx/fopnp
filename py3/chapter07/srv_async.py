@@ -5,10 +5,12 @@
 
 import select, zen_utils
 
+
 def all_events_forever(poll_object):
     while True:
         for fd, event in poll_object.poll():
             yield fd, event
+
 
 def serve(listener):
     sockets = {listener.fileno(): listener}
@@ -42,7 +44,7 @@ def serve(listener):
         elif sock is listener:
             sock, address = sock.accept()
             print('Accepted connection from {}'.format(address))
-            sock.setblocking(False)     # force socket.timeout if we blunder
+            sock.setblocking(False)  # force socket.timeout if we blunder
             sockets[sock.fileno()] = sock
             addresses[sock] = address
             poll_object.register(sock, select.POLLIN)
@@ -70,6 +72,7 @@ def serve(listener):
                 bytes_to_send[sock] = data[n:]
             else:
                 poll_object.modify(sock, select.POLLIN)
+
 
 if __name__ == '__main__':
     address = zen_utils.parse_command_line('low-level async server')

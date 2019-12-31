@@ -5,6 +5,7 @@
 
 import argparse, socket, sys
 
+
 # Inlined constants, because Python 3.6 has dropped the IN module.
 
 class IN:
@@ -12,10 +13,12 @@ class IN:
     IP_MTU_DISCOVER = 10
     IP_PMTUDISC_DO = 2
 
+
 if sys.platform != 'linux':
     print('Unsupported: Can only perform MTU discovery on Linux',
           file=sys.stderr)
     sys.exit(1)
+
 
 def send_big_datagram(host, port):
     sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
@@ -29,6 +32,7 @@ def send_big_datagram(host, port):
         print('Actual MTU: {}'.format(max_mtu))
     else:
         print('The big datagram was sent!')
+
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(description='Send UDP packet to get MTU')
